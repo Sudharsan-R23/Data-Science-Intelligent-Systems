@@ -1,0 +1,28 @@
+{
+  "model_name": "Random Forest",
+  "dataset": "heart_disease",
+  "features": [
+    "Age",
+    "Sex",
+    "ChestPainType",
+    "RestingBP",
+    "Cholesterol",
+    "FastingBS",
+    "RestingECG",
+    "MaxHR",
+    "ExerciseAngina",
+    "Oldpeak",
+    "ST_Slope"
+  ],
+  "target": "HeartDisease",
+  "metrics": {
+    "Accuracy": 0.895,
+    "Precision": 0.9212121212121213,
+    "Recall": 0.95,
+    "F1-Score": 0.9353846153846154,
+    "ROC-AUC": 0.9390624999999998
+  },
+  "training_date": "2026-01-28 13:19:06",
+  "train_size": 800,
+  "test_size": 200
+}

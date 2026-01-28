@@ -1,0 +1,25 @@
+{
+  "model_name": "Random Forest",
+  "dataset": "diabetes",
+  "features": [
+    "Pregnancies",
+    "Glucose",
+    "BloodPressure",
+    "SkinThickness",
+    "Insulin",
+    "BMI",
+    "DiabetesPedigreeFunction",
+    "Age"
+  ],
+  "target": "Outcome",
+  "metrics": {
+    "Accuracy": 0.865,
+    "Precision": 0.8727272727272727,
+    "Recall": 0.96,
+    "F1-Score": 0.9142857142857143,
+    "ROC-AUC": 0.9013333333333334
+  },
+  "training_date": "2026-01-28 13:19:04",
+  "train_size": 800,
+  "test_size": 200
+}
