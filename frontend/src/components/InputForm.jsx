@@ -28,7 +28,7 @@ const InputForm = ({ modelType, onSubmit, loading }) => {
 
     const heartFields = [
         { name: 'Age', label: 'Age', type: 'number', placeholder: '52' },
-        { name: 'Sex', label: 'Sex', type: 'select', options: [{ value: 1, label: 'Male' }, { value: 0, label: 'Female' }] },
+        { name: 'Sex', label: 'Sex', type: 'select', options: [{ value: 1, label: 'Male' }, { value: 0, label: 'Female' }, { value: 0, label: 'Lesban' }] },
         { name: 'ChestPainType', label: 'Chest Pain', type: 'select', options: [{ value: 0, label: 'Type 0' }, { value: 1, label: 'Type 1' }, { value: 2, label: 'Type 2' }, { value: 3, label: 'Type 3' }] },
         { name: 'RestingBP', label: 'Resting BP', type: 'number', placeholder: '130' },
         { name: 'Cholesterol', label: 'Cholesterol', type: 'number', placeholder: '210' },
@@ -43,24 +43,24 @@ const InputForm = ({ modelType, onSubmit, loading }) => {
     const fields = modelType === 'diabetes' ? diabetesFields : heartFields;
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 gap-4">
+        <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {fields.map((field) => (
                     <div key={field.name} className="flex flex-col">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 ml-2">
+                        <label className="text-[10px] font-black text-brand-accent/60 uppercase tracking-[0.2em] mb-3 ml-1">
                             {field.label}
                         </label>
                         {field.type === 'select' ? (
                             <select
                                 name={field.name}
                                 required
-                                className="input-field appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%2394a3b8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22m6%208%204%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.25rem_1.25rem] bg-[right_0.75rem_center] bg-no-repeat"
+                                className="input-field appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%239A8873%22%20stroke-opacity%3D%220.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22m6%208%204%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.25rem_1.25rem] bg-[right_1rem_center] bg-no-repeat"
                                 onChange={handleChange}
                                 defaultValue=""
                             >
-                                <option value="" disabled>Select {field.label}</option>
+                                <option value="" disabled className="bg-brand-surface text-brand-text">Select {field.label}</option>
                                 {field.options.map(opt => (
-                                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                    <option key={opt.value} value={opt.value} className="bg-brand-surface text-brand-text">{opt.label}</option>
                                 ))}
                             </select>
                         ) : (
@@ -70,7 +70,7 @@ const InputForm = ({ modelType, onSubmit, loading }) => {
                                 step={field.step || "1"}
                                 required
                                 placeholder={field.placeholder}
-                                className="input-field"
+                                className="input-field placeholder:text-brand-accent/20"
                                 onChange={handleChange}
                             />
                         )}
@@ -81,15 +81,20 @@ const InputForm = ({ modelType, onSubmit, loading }) => {
             <button
                 type="submit"
                 disabled={loading}
-                className="w-full btn-primary mt-6 mb-10 overflow-hidden relative"
+                className="w-full btn-primary mt-8 mb-4 overflow-hidden relative group"
             >
                 {loading ? (
-                    <div className="flex items-center justify-center space-x-2">
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                        <span>Processing...</span>
+                    <div className="flex items-center justify-center space-x-3">
+                        <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                        <span className="tracking-widest uppercase text-xs font-black">Processing...</span>
                     </div>
                 ) : (
-                    "Run Analysis"
+                    <span className="flex items-center justify-center space-x-2">
+                        <span className="tracking-widest uppercase text-xs font-black">Run System Analysis</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </span>
                 )}
             </button>
         </form>

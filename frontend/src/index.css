@@ -1,74 +1,66 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-blue: #2563eb;
-  --color-brand-lightblue: #dbeafe;
-  --color-brand-orange: #ff6b35;
-  --color-brand-lightorange: #ffedd5;
-  --color-brand-navy: #1e3a8a;
-  --color-brand-slate: #f8fafc;
+  --color-brand-bg: #171614;
+  --color-brand-surface: #37423D;
+  --color-brand-primary: #754043;
+  --color-brand-secondary: #3A2618;
+  --color-brand-accent: #9A8873;
+  --color-brand-text: #F5F5F5;
 
-  --shadow-premium: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-  --shadow-blue: 0 10px 15px -3px rgba(37, 99, 235, 0.2), 0 4px 6px -4px rgba(37, 99, 235, 0.2);
-  --shadow-orange: 0 10px 15px -3px rgba(255, 107, 53, 0.2), 0 4px 6px -4px rgba(255, 107, 53, 0.2);
-
+  --shadow-premium: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  --shadow-primary: 0 10px 15px -3px rgba(117, 64, 67, 0.4), 0 4px 6px -4px rgba(117, 64, 67, 0.4);
+  
   --animate-bounce-subtle: bounceSubtle 2s infinite;
 
   @keyframes bounceSubtle {
-
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-
-    50% {
-      transform: translateY(-5px);
-    }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
   }
 }
 
 @layer base {
   body {
-    @apply bg-brand-slate text-slate-800 antialiased;
+    @apply bg-brand-bg text-brand-text antialiased;
     font-family: 'Inter', sans-serif;
   }
 }
 
 @layer components {
   .app-container {
-    @apply max-w-md mx-auto min-h-screen bg-white shadow-2xl relative flex flex-col;
+    @apply max-w-full lg:max-w-6xl mx-auto min-h-screen bg-brand-bg relative flex flex-col transition-all duration-300;
   }
 
   .card-premium {
-    @apply bg-white rounded-3xl p-6 shadow-premium border border-slate-50 transition-all hover:shadow-lg;
+    @apply bg-brand-surface rounded-3xl p-6 shadow-premium border border-white/5 transition-all hover:shadow-2xl hover:border-white/10;
   }
 
   .btn-primary {
-    @apply bg-brand-blue text-white font-bold py-4 px-8 rounded-2xl shadow-blue hover:bg-blue-700 transition-all active:scale-95 text-center;
+    @apply bg-brand-primary text-white font-bold py-4 px-8 rounded-2xl shadow-primary hover:brightness-110 transition-all active:scale-95 text-center cursor-pointer;
   }
 
   .btn-secondary {
-    @apply bg-brand-orange text-white font-bold py-4 px-8 rounded-2xl shadow-orange hover:bg-orange-600 transition-all active:scale-95 text-center;
+    @apply bg-brand-secondary text-brand-accent font-bold py-4 px-8 rounded-2xl border border-brand-accent/20 hover:bg-brand-secondary/80 transition-all active:scale-95 text-center cursor-pointer;
   }
 
   .tab-inactive {
-    @apply text-slate-400 font-semibold px-4 py-2 transition-all;
+    @apply text-brand-accent/50 font-semibold px-4 py-2 transition-all cursor-pointer;
   }
 
   .tab-active {
-    @apply text-brand-blue font-bold px-4 py-2 border-b-2 border-brand-blue transition-all;
+    @apply text-brand-accent font-bold px-4 py-2 border-b-2 border-brand-primary transition-all cursor-default;
   }
 
   .input-field {
-    @apply w-full bg-slate-50 border-none rounded-2xl p-4 focus:ring-2 focus:ring-brand-blue outline-none text-slate-700 font-medium;
+    @apply w-full bg-brand-surface/50 border border-brand-accent/20 rounded-2xl p-4 focus:ring-2 focus:ring-brand-primary outline-none text-brand-text font-medium transition-all;
   }
 
   .nav-item {
-    @apply flex flex-col items-center justify-center text-slate-300 hover:text-brand-blue transition-colors cursor-pointer;
+    @apply flex flex-col items-center justify-center text-brand-accent/40 hover:text-brand-primary transition-colors cursor-pointer;
   }
 
   .nav-item-active {
-    @apply flex flex-col items-center justify-center text-brand-blue cursor-default;
+    @apply flex flex-col items-center justify-center text-brand-primary cursor-default;
   }
 
   .progress-ring {
@@ -76,11 +68,10 @@
   }
 }
 
-/* Custom styles to match the mobile app look */
-.bg-gradient-blue {
-  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #754043 0%, #3A2618 100%);
 }
 
-.bg-gradient-orange {
-  background: linear-gradient(135deg, #ff6b35 0%, #ea580c 100%);
+.bg-gradient-surface {
+  background: linear-gradient(135deg, #37423D 0%, #171614 100%);
 }

@@ -47,20 +47,41 @@ Follow these steps to deploy and run the project locally.
 - Visit `http://localhost:8000/docs` to see the interactive API documentation.
 - Visit `http://localhost:5173` to use the Healthcare Diagnosis Dashboard.
 
-## 6. Online Deployment (Cloud)
-To host this application online so anyone can access it via a URL, follow these recommendations:
+## 6. Online Deployment (Production)
 
-### A. Backend (Python API) - Use **Render** or **Railway**
-1. Push your code to a **GitHub repository**.
-2. Create a "Web Service" on [Render.com](https://render.com).
-3. **Build Command**: `pip install -r backend/requirements.txt` (Move requirements to root if needed).
-4. **Start Command**: `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`.
+To make your system accessible worldwide, follow these steps to host both the Backend and Frontend for free.
 
-### B. Frontend (UI) - Use **Vercel** or **Netlify**
-1. Connect your GitHub repo to [Vercel](https://vercel.com).
-2. Set the **Root Directory** to `frontend`.
-3. Add an Environment Variable `VITE_API_URL` pointing to your Render backend URL.
-4. Vercel will build and give you a public `.vercel.app` link.
+### Phase 1: Preparation
+1. **Push your code to GitHub**: Create a repository and push this entire project to it.
 
-> [!TIP]
-> For a free academic project, **Render** and **Vercel** are the most popular choices as they offer free tiers for students.
+### Phase 2: Host the Backend (API) on Render
+[Render](https://render.com) is excellent for Python applications.
+1. Sign up/Log in to Render and click **New > Web Service**.
+2. Connect your GitHub repository.
+3. Configure the following settings:
+   - **Name**: `healthcare-api` (or any name)
+   - **Root Directory**: `(leave empty)`
+   - **Environment**: `Python`
+   - **Build Command**: `pip install -r backend/requirements.txt`
+   - **Start Command**: `uvicorn backend.main:app --host 0.0.0.0 --port 10000`
+4. Click **Deploy**. Once finished, copy your service URL (e.g., `https://healthcare-api.onrender.com`).
+
+### Phase 3: Host the Frontend (UI) on Vercel
+[Vercel](https://vercel.com) is the preferred choice for React/Vite.
+1. Sign up/Log in to Vercel and click **Add New > Project**.
+2. Connect the same GitHub repository.
+3. In the project settings:
+   - **Framework Preset**: Vite
+   - **Root Directory**: `frontend`
+   - **Environment Variables**: Add a new variable:
+     - **Key**: `VITE_API_URL`
+     - **Value**: Your Render Backend URL (without a trailing slash)
+4. Click **Deploy**. Vercel will provide a public link (e.g., `https://frontend-name.vercel.app`).
+
+### Phase 4: Verification
+1. Open your Vercel URL.
+2. The Dashboard should load, and the "System Status" at the bottom should show **ONLINE** (if linked correctly to Render).
+3. Try running an analysis to confirm data flows correctly through the web.
+
+> [!IMPORTANT]
+> Render's free tier "spins down" after inactivity. The first request after a break might take 30-60 seconds to respond as the server wakes up.

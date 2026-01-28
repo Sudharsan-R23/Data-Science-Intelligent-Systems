@@ -7,87 +7,94 @@ const ResultDisplay = ({ result, onReset }) => {
     const healthScore = Math.round((1 - result.probability) * 100);
 
     return (
-        <div className="animate-fade-in">
-            {/* Details Activities Header Style */}
-            <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center space-x-4">
-                    <button onClick={onReset} className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </button>
-                    <h2 className="text-xl font-bold text-slate-800">Diagnostic Result</h2>
-                </div>
-                <p className="text-xs font-bold text-slate-400">v1.2.0</p>
-            </div>
-
-            {/* Giant Health Score Chart (matches middle screen in example) */}
-            <div className="card-premium mb-8 text-center bg-gradient-to-br from-white to-slate-50 relative overflow-hidden">
-                <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">Patient Health Index</p>
-                <div className="relative w-40 h-40 mx-auto mb-6">
-                    <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                        <circle cx="50" cy="50" r="45" fill="none" stroke="#f1f5f9" strokeWidth="8" />
-                        <circle
-                            cx="50" cy="50" r="45" fill="none"
-                            stroke={isHighRisk ? "#ff6b35" : "#2563eb"}
-                            strokeWidth="8"
-                            strokeDasharray="283"
-                            strokeDashoffset={283 - (283 * (1 - result.probability))}
-                            strokeLinecap="round"
-                            className="progress-ring"
-                        />
-                    </svg>
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <span className={`text-4xl font-black ${isHighRisk ? 'text-brand-orange' : 'text-brand-blue'}`}>
-                            {healthScore}%
-                        </span>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Healthy</span>
+        <div className="animate-fade-in lg:grid lg:grid-cols-2 lg:gap-12">
+            {/* Left Column: Result Summary */}
+            <div className="space-y-8">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                        <button onClick={onReset} className="w-12 h-12 rounded-2xl bg-brand-surface/50 border border-white/5 flex items-center justify-center text-brand-accent hover:bg-brand-surface transition-all">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+                        <h2 className="text-2xl font-bold text-brand-text">Diagnostic Report</h2>
                     </div>
                 </div>
-                <div className="inline-block px-4 py-1.5 rounded-full bg-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-500">
-                    Confidence: {result.confidence}
-                </div>
-            </div>
 
-            {/* Recommendation List (matches right screen list style) */}
-            <div className="mb-10">
-                <div className="flex items-center justify-between mb-6">
-                    <h3 className="font-bold text-slate-800">Protocol Advice</h3>
-                    <span className="text-xs font-bold text-brand-blue">View All</span>
-                </div>
-
-                <div className="space-y-4">
-                    {result.recommendations.map((rec, index) => (
-                        <div key={index} className="flex items-center p-4 bg-white border border-slate-50 rounded-2xl shadow-sm space-x-4">
-                            <div className={`w-3 h-3 rounded-full ${isHighRisk ? 'bg-brand-orange' : 'bg-brand-blue'}`}></div>
-                            <div className="flex-1">
-                                <p className="text-sm font-bold text-slate-800">{rec}</p>
-                                <p className="text-[10px] text-slate-400 font-medium">Standard medical guideline</p>
-                            </div>
-                            <div className="px-3 py-1 bg-slate-50 rounded-lg text-[10px] font-bold text-slate-400">
-                                INFO
-                            </div>
+                <div className="card-premium text-center relative overflow-hidden bg-brand-surface/40">
+                    <p className="text-[10px] font-black text-brand-accent/40 uppercase tracking-[0.2em] mb-8">Patient Health Index</p>
+                    <div className="relative w-48 h-48 mx-auto mb-8">
+                        <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth="6" />
+                            <circle
+                                cx="50" cy="50" r="45" fill="none"
+                                stroke={isHighRisk ? "var(--color-brand-primary)" : "var(--color-brand-accent)"}
+                                strokeWidth="6"
+                                strokeDasharray="283"
+                                strokeDashoffset={283 - (283 * (1 - result.probability))}
+                                strokeLinecap="round"
+                                className="progress-ring shadow-lg"
+                            />
+                        </svg>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center">
+                            <span className={`text-5xl font-black ${isHighRisk ? 'text-brand-primary' : 'text-brand-accent'}`}>
+                                {healthScore}%
+                            </span>
+                            <span className="text-[10px] font-black text-brand-accent/40 uppercase tracking-[0.2em] mt-1">Status OK</span>
                         </div>
-                    ))}
+                    </div>
+                    <div className="inline-block px-6 py-2 rounded-full bg-brand-bg/40 border border-white/5 text-[10px] font-black uppercase tracking-widest text-brand-accent/60">
+                        Reliability: {(result.confidence * 100).toFixed(1)}%
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-6">
+                    <div className="p-6 rounded-4xl bg-brand-surface/30 border border-white/5">
+                        <p className="text-[10px] font-black text-brand-accent/40 uppercase mb-2 tracking-widest">Diagnosis</p>
+                        <p className="font-bold text-brand-text leading-tight text-lg">{result.diagnosis}</p>
+                    </div>
+                    <div className={`p-6 rounded-4xl border border-white/5 ${isHighRisk ? 'bg-brand-primary/10' : 'bg-brand-accent/10'}`}>
+                        <p className={`text-[10px] font-black ${isHighRisk ? 'text-brand-primary' : 'text-brand-accent'} uppercase mb-2 tracking-widest`}>Risk Assessment</p>
+                        <p className={`font-bold ${isHighRisk ? 'text-brand-primary' : 'text-brand-accent'} leading-tight text-lg`}>{result.risk_level}</p>
+                    </div>
                 </div>
             </div>
 
-            {/* Summary Boxes (matches small footer boxes in example) */}
-            <div className="grid grid-cols-2 gap-4 mb-10">
-                <div className="p-5 rounded-3xl bg-brand-lightblue">
-                    <p className="text-[10px] font-black text-brand-blue uppercase mb-1">Status</p>
-                    <p className="font-bold text-brand-navy leading-tight">{result.diagnosis}</p>
-                </div>
-                <div className={`p-5 rounded-3xl ${isHighRisk ? 'bg-brand-lightorange' : 'bg-slate-100'}`}>
-                    <p className={`text-[10px] font-black ${isHighRisk ? 'text-brand-orange' : 'text-slate-400'} uppercase mb-1`}>Risk Level</p>
-                    <p className={`font-bold ${isHighRisk ? 'text-brand-orange' : 'text-slate-600'} leading-tight`}>{result.risk_level}</p>
-                </div>
-            </div>
+            {/* Right Column: Recommendations */}
+            <div className="mt-12 lg:mt-0 flex flex-col justify-between">
+                <div>
+                    <div className="flex items-center justify-between mb-8">
+                        <h3 className="text-xl font-bold text-brand-text">Medical Protocols</h3>
+                        <span className="text-xs font-black text-brand-primary uppercase tracking-widest">v4.0.2</span>
+                    </div>
 
-            <button onClick={onReset} className="w-full btn-secondary mb-10">
-                New Patient Analysis
-            </button>
+                    <div className="space-y-4">
+                        {result.recommendations.map((rec, index) => (
+                            <div key={index} className="flex items-center p-5 bg-brand-surface/20 border border-white/5 rounded-3xl group hover:bg-brand-surface/40 transition-all">
+                                <div className={`w-2 h-2 rounded-full mr-5 ${isHighRisk ? 'bg-brand-primary' : 'bg-brand-accent'}`}></div>
+                                <div className="flex-1">
+                                    <p className="text-sm font-bold text-brand-text/90 group-hover:text-white transition-colors">{rec}</p>
+                                    <p className="text-[10px] text-brand-accent/30 font-bold uppercase tracking-tighter mt-1">Clinical Directive</p>
+                                </div>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-brand-accent/20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <button onClick={onReset} className="w-full btn-secondary mt-12 py-5 lg:mb-0 mb-10 group">
+                    <span className="flex items-center justify-center space-x-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:-rotate-45 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span className="uppercase tracking-[0.2em] text-xs font-black">Begin New Diagnosis</span>
+                    </span>
+                </button>
+            </div>
         </div>
+
     );
 };
 
